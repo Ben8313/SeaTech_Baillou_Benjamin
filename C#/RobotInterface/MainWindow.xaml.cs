@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ExtendedSerialPort_NS;
 
 namespace RobotInterface
 {
@@ -21,10 +22,18 @@ namespace RobotInterface
             InitializeComponent();
         }
         Boolean couleur = false;
+
+        private void SendMessage()
+        {
+            textBoxReception.Text += "Recu : " + TextBoxEmission.Text;
+            TextBoxEmission.Clear();
+
+
+
+        }
         private void buttonEnvoyer_Click(object sender, RoutedEventArgs e)
         {
-            textBoxReception.Text += "Recu : "+TextBoxEmission.Text;
-            TextBoxEmission.Clear();
+            SendMessage();
             if (couleur == false)
             {
                 buttonEnvoyer.Background = Brushes.RoyalBlue;
@@ -35,6 +44,15 @@ namespace RobotInterface
             {
                 buttonEnvoyer.Background = Brushes.Beige;
                 couleur = false;
+               
+            }
+        }
+
+        private void TextBoxEmission_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                SendMessage();
             }
         }
     }
