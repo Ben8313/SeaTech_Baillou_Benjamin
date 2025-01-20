@@ -37,7 +37,7 @@ namespace RobotInterface
             timerAffichage.Tick += TimerAffichage_Tick;
             timerAffichage.Start();
 
-            //Queue<byte> byteListReceived = new Queue<byte>();
+           
             serialPort1 = new ExtendedSerialPort("COM3", 115200, Parity.None, 8, StopBits.One);
             serialPort1.DataReceived += SerialPort1_DataReceived;
             serialPort1.Open();
@@ -54,11 +54,12 @@ namespace RobotInterface
             while (robot.byteListReceived.Count>0)
             {
                 byte b=robot.byteListReceived.Dequeue();
-                hexBuuilder.AppendLine($"ToString(): {b.ToString()}");
-                hexBuuilder.AppendLine($"ToString(\"X\"): {b.ToString("X")}");
-                hexBuuilder.AppendLine($"ToString(\"X2\"): {b.ToString("X2")}");
-                hexBuuilder.AppendLine($"ToString(\"X4\"): {b.ToString("X4")}");
-                hexBuuilder.AppendLine();
+                textBoxReception.Text += "0x"+b.ToString("X2")+" ";
+                //hexBuuilder.AppendLine($"ToString(): {b.ToString()}");
+                //hexBuuilder.AppendLine($"ToString(\"X\"): {b.ToString("X")}");
+                //hexBuuilder.AppendLine($"ToString(\"X2\"): {b.ToString("X2")}");
+                //hexBuuilder.AppendLine($"ToString(\"X4\"): {b.ToString("X4")}");
+                //hexBuuilder.AppendLine();
             }
             textBoxReception.Text += hexBuuilder.ToString();
         }
