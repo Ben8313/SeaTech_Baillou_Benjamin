@@ -14,6 +14,7 @@ using System.Windows.Threading;
 
 
 
+
 namespace RobotInterface
 {
     /// <summary>
@@ -21,16 +22,13 @@ namespace RobotInterface
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+
         Boolean couleur = false;
         Boolean couleur2 = false;
         ExtendedSerialPort serialPort1;
-        string receivedText; 
+        //string receivedText; 
         DispatcherTimer timerAffichage;
-
-
-
-
+        Robot robot = new Robot();
 
         public MainWindow()
         {
@@ -38,25 +36,42 @@ namespace RobotInterface
             timerAffichage.Interval = new TimeSpan(0, 0, 0, 0, 100);
             timerAffichage.Tick += TimerAffichage_Tick;
             timerAffichage.Start();
+
+            //Queue<byte> byteListReceived = new Queue<byte>();
             serialPort1 = new ExtendedSerialPort("COM3", 115200, Parity.None, 8, StopBits.One);
             serialPort1.DataReceived += SerialPort1_DataReceived;
             serialPort1.Open();
             InitializeComponent();
-            
+
 
         }
 
         private void TimerAffichage_Tick(object? sender, EventArgs e)
         {
-
-            textBoxReception.Text += receivedText;
-            receivedText=string.Empty;
+            StringBuilder hexBuuilder = new StringBuilder();
+            //textBoxReception.Text += robot.receivedText;
+            //robot.receivedText = string.Empty;
+            while (robot.byteListReceived.Count>0)
+            {
+                byte b=robot.byteListReceived.Dequeue();
+                hexBuuilder.AppendLine($"ToString(): {b.ToString()}");
+                hexBuuilder.AppendLine($"ToString(\"X\"): {b.ToString("X")}");
+                hexBuuilder.AppendLine($"ToString(\"X2\"): {b.ToString("X2")}");
+                hexBuuilder.AppendLine($"ToString(\"X4\"): {b.ToString("X4")}");
+                hexBuuilder.AppendLine();
+            }
+            textBoxReception.Text += hexBuuilder.ToString();
         }
 
         public void SerialPort1_DataReceived(object sender, DataReceivedArgs e)
         {
-            receivedText += Encoding.UTF8.GetString(e.Data, 0, e.Data.Length);
-           
+            foreach (byte b in e.Data)
+            {
+
+
+                //robot.receivedText += Encoding.UTF8.GetString(e.Data, 0, e.Data.Length);
+                robot.byteListReceived.Enqueue(b);
+            }
         }
 
         private void SendMessage()
@@ -74,14 +89,14 @@ namespace RobotInterface
             if (couleur == false)
             {
                 buttonEnvoyer.Background = Brushes.RoyalBlue;
-                
+
                 couleur = true;
             }
             else
             {
                 buttonEnvoyer.Background = Brushes.Beige;
                 couleur = false;
-               
+
             }
         }
 
@@ -108,6 +123,24 @@ namespace RobotInterface
                 couleur = false;
 
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            byte[] byteList = new byte[20];
+            for (int i = 0; i < 20; i++)
+            {
+                byteList[i] = (byte)(2 * i);
+            }
+            Console.WriteLine("Données envoyées (hexa)");
+            foreach (byte b in byteList)
+            {
+                Console.WriteLine($"{b:X2}");
+
+            }
+            Console.WriteLine();
+            serialPort1.Write(byteList, 0, byteList.Length);
+            Console.WriteLine("Données envoyées");
         }
     }
 }
