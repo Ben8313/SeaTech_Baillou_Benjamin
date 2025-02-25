@@ -32,23 +32,23 @@
         <StackPanel Grid.Column="1" Grid.Row="3" Margin="0,30,271,0" Grid.RowSpan="2">
             <GroupBox Height="100" Header="Leds" Width="70"/>
         </StackPanel>
-        <CheckBox Grid.Column="1" Content="Led1" HorizontalAlignment="Left" Margin="10,20,0,80" Grid.Row="4"/>
-        <CheckBox Grid.Column="1" Content="Led2" HorizontalAlignment="Left" Margin="10,40,0,60" Grid.Row="4"/>
-        <CheckBox Grid.Column="1" Content="Led3" HorizontalAlignment="Left" Margin="10,60,0,40" Grid.Row="4"/>
+        <CheckBox Grid.Column="1" x:Name="Led1" Content="Led1" HorizontalAlignment="Left" Margin="10,20,0,80" Grid.Row="4"/>
+        <CheckBox Grid.Column="1" x:Name="Led2" Content="Led2" HorizontalAlignment="Left" Margin="10,40,0,60" Grid.Row="4"/>
+        <CheckBox Grid.Column="1" x:Name="Led3" Content="Led3" HorizontalAlignment="Left" Margin="10,60,0,40" Grid.Row="4"/>
 
         <StackPanel Grid.Column="1" Grid.Row="3" Margin="84,30,138,10" RenderTransformOrigin="0.497,0.361" Grid.RowSpan="2">
-            <GroupBox Height="100" Header="Télémètres IR">
-                <Label Content="IR Gauche: ?? cm" HorizontalAlignment="Center" Width="121" VerticalAlignment="Top"/>
-            </GroupBox>
+            <GroupBox Height="100" Header="Télémètres IR"/>
         </StackPanel>
-        <Label Grid.Column="1" Content="IR Centre : ??cm" HorizontalAlignment="Left" Margin="89,37,0,0" Grid.Row="4" VerticalAlignment="Top"/>
-        <Label Grid.Column="1" Content="IR Droit : ??cm" HorizontalAlignment="Left" Margin="89,60,0,0" Grid.Row="4" VerticalAlignment="Top"/>
+        <Label Grid.Column="1" Content="" x:Name="IRCentre" HorizontalAlignment="Left" Margin="89,37,0,0" Grid.Row="4" VerticalAlignment="Top"/>
 
         <StackPanel Grid.Column="1" Grid.Row="3" Margin="231,30,0,0" Grid.RowSpan="2">
             <GroupBox Height="100" Header="Moteurs"/>
         </StackPanel>
         <Label Grid.Column="1" Content="Vitesse Gauche : ??" HorizontalAlignment="Left" Margin="231,19,0,0" Grid.Row="4" VerticalAlignment="Top"/>
         <Label Grid.Column="1" Content="Vitesse Centre : ??" HorizontalAlignment="Left" Margin="231,42,0,0" Grid.Row="4" VerticalAlignment="Top"/>
+        <TextBox Grid.Column="1" x:Name="IRGauche" HorizontalAlignment="Left" Margin="90,21,0,0" Grid.Row="4" TextWrapping="Wrap" Text="IR Gauche: ?? cm" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
+        <TextBox Grid.Column="1" x:Name="IRDroit" HorizontalAlignment="Left" Margin="89,63,0,0" Grid.Row="4" TextWrapping="Wrap" Text="IR Droit : ??cm" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged_1"/>
+        <TextBox Grid.Column="1" x:Name="IRCentr" HorizontalAlignment="Left" Margin="90,42,0,0" Grid.Row="4" TextWrapping="Wrap" Text="IR Centre: ??cm" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged_1"/>
 
 
 
